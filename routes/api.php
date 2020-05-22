@@ -16,3 +16,11 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->group([
+    'prefix' => 'admin'
+], function ($router) {
+    $router->post('login', 'Auth\AdminController@login');
+    $router->get('me', 'Auth\AdminController@me');
+    $router->post('logout', 'Auth\AdminController@logout');
+});
