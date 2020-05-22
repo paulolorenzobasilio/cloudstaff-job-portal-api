@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Laravel\Lumen\Routing\Controller as BaseController;
 use App\Model\Admin;
 use App\Model\Employer;
 
-class AdminController extends BaseController
+class AdminController extends Controller
 {
     public function createAdmin(Admin $admin)
     {
