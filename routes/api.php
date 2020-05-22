@@ -17,7 +17,7 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function ($router){
+$router->group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function ($router) {
     $router->post('create-admin', 'AdminController@createAdmin');
     $router->post('create-employer', 'AdminController@createEmployer');
 });
@@ -28,3 +28,8 @@ $router->group(['prefix' => 'admin/auth'], function ($router) {
     $router->post('logout', 'Auth\AdminController@logout');
 });
 
+$router->group(['prefix' => 'employer/auth'], function ($router) {
+    $router->post('login', 'Auth\EmployerController@login');
+    $router->get('me', 'Auth\EmployerController@me');
+    $router->post('logout', 'Auth\EmployerController@logout');
+});

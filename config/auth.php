@@ -1,6 +1,7 @@
 <?php
 
 use App\Model\Admin;
+use App\Model\Employer;
 
 return [
 
@@ -41,6 +42,11 @@ return [
             'driver' => 'jwt',
             'provider' => 'admins'
         ],
+
+        'employer' => [
+            'driver' => 'jwt',
+            'provider' => 'employers'
+        ]
     ],
 
     /*
@@ -65,6 +71,11 @@ return [
             'driver' => 'eloquent',
             'model' => Admin::class,
         ],
+
+        'employers' => [
+            'driver' => 'eloquent',
+            'model' => Employer::class
+        ]
     ],
 
     /*
