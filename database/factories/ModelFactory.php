@@ -4,10 +4,11 @@
 
 use App\Model\Admin;
 use App\Model\Employer;
+use App\Model\Jobs;
 use App\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Str;
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -26,7 +27,7 @@ $factory->define(User::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(Admin::class, function (Faker $faker){
+$factory->define(Admin::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->email,
@@ -34,11 +35,26 @@ $factory->define(Admin::class, function (Faker $faker){
     ];
 });
 
-$factory->define(Employer::class, function (Faker $faker){
+$factory->define(Employer::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'description' => $faker->paragraph(5),
         'email' => $faker->unique()->email,
         'password' => Hash::make('password')
+    ];
+});
+
+$factory->define(Jobs::class, function (Faker $faker) {
+    $title = $faker->sentence(3);
+
+    return [
+        'title' => $title,
+        'title_slug' => Str::slug($title . ' ' . rand(0,9999)),
+        'description' => $faker->paragraph(5),
+        'requirements' => $faker->paragraph(5),
+        'location' => $faker->sentence(),
+        'salary_min' => rand(25000, 50000),
+        'salary_max' => rand(60000, 12000),
+        'employer_id' => factory(Employer::class)
     ];
 });
