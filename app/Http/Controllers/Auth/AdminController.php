@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Laravel\Lumen\Routing\Controller as BaseController;
-
-class AdminController extends BaseController
+class AdminController extends AuthController
 {
+    protected $guard = 'admin';
+    
     public function __construct()
     {
         $this->middleware('auth:admin', ['except' => ['login']]);
@@ -21,25 +21,4 @@ class AdminController extends BaseController
 
         return $this->sendLoginResponse($token);
     }
-
-    public function me()
-    {
-        return response()->json(auth()->user());
-    }
-
-    public function logout(){
-        auth()->logout();
-
-        return response()->json(['message' => 'Successfully logged out.']);
-    }
-
-    protected function sendLoginResponse($token)
-    {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
-        ]);
-    }
-
 }
