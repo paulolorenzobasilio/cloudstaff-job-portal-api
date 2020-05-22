@@ -28,6 +28,10 @@ $router->group(['prefix' => 'admin/auth'], function ($router) {
     $router->post('logout', 'Auth\AdminController@logout');
 });
 
+$router->group(['prefix' => 'employer/jobs', 'middleware' => 'auth:employer'], function($router) {
+    $router->get('/', 'JobController@index');
+});
+
 $router->group(['prefix' => 'employer/auth'], function ($router) {
     $router->post('login', 'Auth\EmployerController@login');
     $router->get('me', 'Auth\EmployerController@me');

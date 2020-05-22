@@ -53,6 +53,6 @@ class Employer extends Model implements AuthenticatableContract, AuthorizableCon
 
     public function jobs()
     {
-        return $this->hasMany(Jobs::class);
+        return $this->hasMany(Job::class);
     }
 }
