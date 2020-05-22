@@ -3,6 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Model\Admin;
+use App\Model\Employer;
 use App\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Facades\Hash;
@@ -28,6 +29,15 @@ $factory->define(User::class, function (Faker $faker) {
 $factory->define(Admin::class, function (Faker $faker){
     return [
         'name' => $faker->name,
+        'email' => $faker->unique()->email,
+        'password' => Hash::make('password')
+    ];
+});
+
+$factory->define(Employer::class, function (Faker $faker){
+    return [
+        'name' => $faker->name,
+        'description' => $faker->paragraph(5),
         'email' => $faker->unique()->email,
         'password' => Hash::make('password')
     ];
