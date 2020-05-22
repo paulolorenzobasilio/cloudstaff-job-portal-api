@@ -19,6 +19,7 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function ($router){
     $router->post('create-admin', 'AdminController@createAdmin');
+    $router->post('create-employer', 'AdminController@createEmployer');
 });
 
 $router->group(['prefix' => 'admin/auth'], function ($router) {

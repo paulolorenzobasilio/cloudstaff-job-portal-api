@@ -4,17 +4,11 @@ namespace App\Http\Controllers;
 
 use Laravel\Lumen\Routing\Controller as BaseController;
 use App\Model\Admin;
+use App\Model\Employer;
 
 class AdminController extends BaseController
 {
-    private $admin;
-
-    public function __construct(Admin $admin)
-    {
-        $this->admin = $admin;
-    }
-
-    public function createAdmin()
+    public function createAdmin(Admin $admin)
     {
         $this->validate(request(), [
             'name' => 'required',
@@ -23,8 +17,26 @@ class AdminController extends BaseController
         ]);
 
         $data = request(['name', 'email', 'password']);
+        $data['password'] = app('hash')->make($data['password']);
 
-        $this->admin->create($data);
+        $admin->create($data);
+
+        return response()->json([], 201);
+    }
+
+    public function createEmployer(Employer $employer)
+    {
+        $this->validate(request(), [
+            'name' => 'required',
+            'description' => 'required',
+            'email' => 'required|email|unique:employers',
+            'password' => 'required|min:6|confirmed'
+        ]);
+
+        $data = request(['name', 'description', 'email', 'password']);
+        $data['password'] = app('hash')->make($data['password']);
+
+        $employer->create($data);
 
         return response()->json([], 201);
     }
