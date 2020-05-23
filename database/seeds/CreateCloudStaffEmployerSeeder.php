@@ -1,7 +1,7 @@
 <?php
 
 use App\Model\Employer;
-use App\Model\Jobs;
+use App\Model\Job;
 use Illuminate\Database\Seeder;
 
 class CreateCloudStaffEmployerSeeder extends Seeder
@@ -17,7 +17,7 @@ class CreateCloudStaffEmployerSeeder extends Seeder
             'name' => 'Cloud Staff',
             'email' => 'admin@cloudstaff.com',
         ])->each(function($employer) {
-            $employer->jobs()->createMany(factory(Jobs::class, 5)->make([
+            $employer->jobs()->createMany(factory(Job::class, 5)->make([
                 'employer_id' => $employer->id
             ])->toArray());
         });
