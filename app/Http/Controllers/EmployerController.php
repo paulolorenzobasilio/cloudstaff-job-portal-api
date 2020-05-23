@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-class JobController extends Controller
+class EmployerController extends Controller
 {
     private $jobs;
 
