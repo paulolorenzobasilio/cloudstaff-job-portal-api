@@ -14,7 +14,7 @@ class Job extends Model
      */
     protected $fillable = [
         'title', 'title_slug', 'description', 'requirements', 'location', 'salary_min',
-        'salary_max', 'employer_id'
+        'salary_max', 'employer_id', 'posted'
     ];
     
     protected static function booted()

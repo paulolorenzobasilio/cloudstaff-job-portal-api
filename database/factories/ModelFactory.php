@@ -56,7 +56,8 @@ $factory->define(Job::class, function (Faker $faker) {
         'location' => $faker->sentence(),
         'salary_min' => rand(25000, 50000),
         'salary_max' => rand(60000, 120000),
-        'employer_id' => factory(Employer::class)
+        'employer_id' => factory(Employer::class),
+        'posted' => rand(0,1)
     ];
 });
 

@@ -23,6 +23,8 @@ class CreateJobsTable extends Migration
             $table->text('location');
             $table->integer('salary_min');
             $table->integer('salary_max');
+            $table->boolean('posted')->default(false)
+                ->comment('true for public job posting, false for private');
             $table->timestamps();
         });
     }
