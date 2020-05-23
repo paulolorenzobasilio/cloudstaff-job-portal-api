@@ -31,6 +31,7 @@ $router->group(['prefix' => 'admin/auth'], function ($router) {
 $router->group(['prefix' => 'employer/jobs', 'middleware' => 'auth:employer'], function ($router) {
     $router->get('/', 'EmployerController@index');
     $router->post('/', 'EmployerController@create');
+    $router->put('{id}', 'EmployerController@update');
     $router->delete('{id}', 'EmployerController@destroy');
     $router->get('{id}', 'EmployerController@show');
     $router->get('{id}/applicants', 'EmployerController@listApplicants');

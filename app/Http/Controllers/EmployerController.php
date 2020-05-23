@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class EmployerController extends Controller
 {
     private $jobs;
@@ -44,6 +46,34 @@ class EmployerController extends Controller
         return response()->json([], 201);
     }
 
+    public function update($id)
+    {
+        $job = $this->jobs->getResults()->find($id);
+
+        if (is_null($job)) {
+            throw new ModelNotFoundException("Job not found");
+        }
+
+        $this->validate(request(), [
+            'title' => 'required',
+            'description' => 'required',
+            'requirements' => 'required',
+            'location' => 'required',
+            'salary_min' => 'required|numeric',
+            'salary_max' => 'required|numeric|gt:salary_min',
+            'posted' => 'boolean'
+        ]);
+
+        $data = request([
+            'title', 'description', 'requirements', 'location',
+            'salary_min', 'salary_max', 'posted'
+        ]);
+
+        $job->update($data);
+
+        return response()->json();
+    }
+
     public function destroy($id)
     {
         $this->jobs->getResults()->find($id)->delete();
@@ -55,14 +85,15 @@ class EmployerController extends Controller
     {
         $jobApplicants = $this->jobs->getResults()
             ->find($id)->job_applicants;
-            
+
         return response()->json($jobApplicants);
     }
 
     /**
      * Toggle job posting visiblity privately or publicly
      */
-    public function posted($id){
+    public function posted($id)
+    {
         $job = $this->jobs->getResults()->find($id);
         $job->posted = !$job->posted;
         $job->save();
