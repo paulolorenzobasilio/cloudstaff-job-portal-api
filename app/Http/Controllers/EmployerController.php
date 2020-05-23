@@ -27,14 +27,7 @@ class EmployerController extends Controller
 
     public function create()
     {
-        $this->validate(request(), [
-            'title' => 'required',
-            'description' => 'required',
-            'requirements' => 'required',
-            'location' => 'required',
-            'salary_min' => 'required|numeric',
-            'salary_max' => 'required|numeric|gt:salary_min'
-        ]);
+        $this->validateFields(request());
 
         $data = request([
             'title', 'description', 'requirements', 'location',
@@ -54,15 +47,7 @@ class EmployerController extends Controller
             throw new ModelNotFoundException("Job not found");
         }
 
-        $this->validate(request(), [
-            'title' => 'required',
-            'description' => 'required',
-            'requirements' => 'required',
-            'location' => 'required',
-            'salary_min' => 'required|numeric',
-            'salary_max' => 'required|numeric|gt:salary_min',
-            'posted' => 'boolean'
-        ]);
+        $this->validateFields(request());
 
         $data = request([
             'title', 'description', 'requirements', 'location',
@@ -99,5 +84,18 @@ class EmployerController extends Controller
         $job->save();
 
         return response()->json();
+    }
+
+    private function validateFields($request)
+    {
+        $this->validate($request, [
+            'title' => 'required',
+            'description' => 'required',
+            'requirements' => 'required',
+            'location' => 'required',
+            'salary_min' => 'required|numeric',
+            'salary_max' => 'required|numeric|gt:salary_min',
+            'posted' => 'boolean'
+        ]);
     }
 }
