@@ -2,8 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Jobs\Job;
 use App\Model\Admin;
 use App\Model\Employer;
+use App\Model\JobApplicant;
 use App\Model\Jobs;
 use App\User;
 use Faker\Generator as Faker;
@@ -56,5 +58,14 @@ $factory->define(Jobs::class, function (Faker $faker) {
         'salary_min' => rand(25000, 50000),
         'salary_max' => rand(60000, 120000),
         'employer_id' => factory(Employer::class)
+    ];
+});
+
+$factory->define(JobApplicant::class, function (Faker $faker){
+    return [
+        'job_id' => factory(Job::class),
+        'name' => $faker->name(),
+        'email' => $faker->unique()->email,
+        'resume_link' => $faker->url,
     ];
 });

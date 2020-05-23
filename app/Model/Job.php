@@ -30,6 +30,10 @@ class Job extends Model
         return $this->belongsTo(Employer::class);
     }
 
+    public function jobs(){
+        return $this->hasMany(JobApplicant::class);
+    }
+
     public function setTitleAttribute($value){
         $this->attributes['title'] = Str::title($value);
     }
