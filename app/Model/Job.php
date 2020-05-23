@@ -30,7 +30,7 @@ class Job extends Model
         return $this->belongsTo(Employer::class);
     }
 
-    public function jobs(){
+    public function job_applicants(){
         return $this->hasMany(JobApplicant::class);
     }
 

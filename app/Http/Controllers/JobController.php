@@ -44,9 +44,18 @@ class JobController extends Controller
         return response()->json([], 201);
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $this->jobs->getResults()->find($id)->delete();
 
         return response()->json([], 200);
+    }
+
+    public function listApplicants($id)
+    {
+        $jobApplicants = $this->jobs->getResults()
+            ->find($id)->job_applicants;
+            
+        return response()->json($jobApplicants);
     }
 }
