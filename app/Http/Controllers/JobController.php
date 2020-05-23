@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 class JobController extends Controller
 {
-    private $employer;
     private $jobs;
 
     public function __construct()
     {
-        $this->employer = auth()->guard('employer')->user();
-        $this->jobs = $this->employer->jobs();
+        $employer = auth()->guard('employer')->user();
+        $this->jobs = $employer->jobs();
     }
 
     public function index()
@@ -43,5 +42,11 @@ class JobController extends Controller
         $this->jobs->create($data);
 
         return response()->json([], 201);
+    }
+
+    public function destroy($id){
+        $this->jobs->getResults()->find($id)->delete();
+
+        return response()->json([], 200);
     }
 }
