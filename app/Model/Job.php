@@ -37,4 +37,8 @@ class Job extends Model
     public function setTitleAttribute($value){
         $this->attributes['title'] = Str::title($value);
     }
+
+    public function scopePosted($query){
+        return $query->where('posted', 1);
+    }
 }

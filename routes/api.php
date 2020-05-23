@@ -43,3 +43,7 @@ $router->group(['prefix' => 'employer/auth'], function ($router) {
     $router->get('me', 'Auth\EmployerController@me');
     $router->post('logout', 'Auth\EmployerController@logout');
 });
+
+$router->group(['prefix' => 'jobs'], function ($router) {
+    $router->get('', 'JobController@index');
+});
