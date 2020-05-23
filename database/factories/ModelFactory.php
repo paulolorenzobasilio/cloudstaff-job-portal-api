@@ -2,11 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Jobs\Job;
 use App\Model\Admin;
 use App\Model\Employer;
 use App\Model\JobApplicant;
-use App\Model\Jobs;
+use App\Model\Job;
 use App\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Facades\Hash;
@@ -46,7 +45,7 @@ $factory->define(Employer::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(Jobs::class, function (Faker $faker) {
+$factory->define(Job::class, function (Faker $faker) {
     $title = $faker->sentence(3);
 
     return [
