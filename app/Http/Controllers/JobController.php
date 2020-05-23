@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Job;
+use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
@@ -23,8 +24,8 @@ class JobController extends BaseController
     public function apply(Job $job, $slug)
     {
         $jobPosting = $job->titleSlug($slug)->first();
-        
-        if(is_null($jobPosting)){
+
+        if (is_null($jobPosting)) {
             throw new ModelNotFoundException("Job not found");
         }
 
@@ -40,8 +41,19 @@ class JobController extends BaseController
          */
         $data['resume_link'] = "http://somerandomurl.com";
 
-        $jobPosting->job_applicants()->create($data);
+        $jobApplicants = $jobPosting->job_applicants();
+        
+        if ($this->checkIfJobApplicantAlreadyApplied($jobApplicants, $data["email"])) {
+            throw new Exception('Job applicant already applied on this job.');
+        }
+
+        $jobApplicants->create($data);
 
         return response()->json([], 201);
+    }
+
+    private function checkIfJobApplicantAlreadyApplied($jobApplicants, $email)
+    {
+        return $jobApplicants->getResults()->where('email', $email)->isNotEmpty();
     }
 }
