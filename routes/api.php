@@ -30,6 +30,7 @@ $router->group(['prefix' => 'admin/auth'], function ($router) {
 
 $router->group(['prefix' => 'employer/jobs', 'middleware' => 'auth:employer'], function($router) {
     $router->get('/', 'JobController@index');
+    $router->get('{id}', 'JobController@show');
 });
 
 $router->group(['prefix' => 'employer/auth'], function ($router) {
