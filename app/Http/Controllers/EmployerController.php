@@ -58,4 +58,15 @@ class EmployerController extends Controller
             
         return response()->json($jobApplicants);
     }
+
+    /**
+     * Toggle job posting visiblity privately or publicly
+     */
+    public function posted($id){
+        $job = $this->jobs->getResults()->find($id);
+        $job->posted = !$job->posted;
+        $job->save();
+
+        return response()->json();
+    }
 }
