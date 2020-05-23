@@ -16,12 +16,15 @@ class Job extends Model
         'title', 'title_slug', 'description', 'requirements', 'location', 'salary_min',
         'salary_max', 'employer_id', 'posted'
     ];
-    
+
     protected static function booted()
     {
-        static::creating(function ($job){
-            $titleSlug = $job->attributes['title'] . "-" . time();
-            $job->attributes['title_slug'] = Str::slug($titleSlug);
+        static::creating(function ($job) {
+            $job->attributes['title_slug'] = static::setTitleSlug($job->attributes['title']);
+        });
+
+        static::updating(function ($job) {
+            $job->attributes['title_slug'] = static::setTitleSlug($job->attributes['title']);
         });
     }
 
@@ -30,19 +33,28 @@ class Job extends Model
         return $this->belongsTo(Employer::class);
     }
 
-    public function job_applicants(){
+    public function job_applicants()
+    {
         return $this->hasMany(JobApplicant::class);
     }
 
-    public function setTitleAttribute($value){
+    public function setTitleAttribute($value)
+    {
         $this->attributes['title'] = Str::title($value);
     }
 
-    public function scopePosted($query){
+    public function scopePosted($query)
+    {
         return $query->where('posted', 1);
     }
 
-    public function scopeTitleSlug($query, $titleSlug){
+    public function scopeTitleSlug($query, $titleSlug)
+    {
         return $query->where('title_slug', $titleSlug);
+    }
+
+    private static function setTitleSlug($title){
+        return Str::slug($title . "-" . time());
+        
     }
 }
