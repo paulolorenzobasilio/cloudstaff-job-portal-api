@@ -38,7 +38,7 @@ class EmployerController extends Controller
 
         $data = request([
             'title', 'description', 'requirements', 'location',
-            'salary_min', 'salary_max'
+            'salary_min', 'salary_max', 'posted'
         ]);
 
         $this->jobs->create($data);
