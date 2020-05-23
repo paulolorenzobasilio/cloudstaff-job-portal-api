@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Job extends Model
 {
@@ -15,9 +16,21 @@ class Job extends Model
         'title', 'title_slug', 'description', 'requirements', 'location', 'salary_min',
         'salary_max', 'employer_id'
     ];
+    
+    protected static function booted()
+    {
+        static::creating(function ($job){
+            $titleSlug = $job->attributes['title'] . "-" . time();
+            $job->attributes['title_slug'] = Str::slug($titleSlug);
+        });
+    }
 
     public function employer()
     {
         return $this->belongsTo(Employer::class);
+    }
+
+    public function setTitleAttribute($value){
+        $this->attributes['title'] = Str::title($value);
     }
 }
