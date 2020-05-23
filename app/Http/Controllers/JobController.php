@@ -12,4 +12,10 @@ class JobController extends BaseController
         $jobs = $job->posted()->paginate(15);
         return response()->json($jobs);
     }
+
+    public function show(Job $job, $slug)
+    {
+        $jobPosting = $job->titleSlug($slug)->first();
+        return response()->json($jobPosting);
+    }
 }

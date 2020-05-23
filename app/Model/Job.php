@@ -41,4 +41,8 @@ class Job extends Model
     public function scopePosted($query){
         return $query->where('posted', 1);
     }
+
+    public function scopeTitleSlug($query, $titleSlug){
+        return $query->where('title_slug', $titleSlug);
+    }
 }
