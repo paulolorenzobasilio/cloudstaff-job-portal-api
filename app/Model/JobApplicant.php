@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\Jobs\Job;
 use Illuminate\Database\Eloquent\Model;
+use Ramsey\Uuid\Uuid;
 
 class JobApplicant extends Model
 {
@@ -16,6 +17,12 @@ class JobApplicant extends Model
 
     public function job(){
         return $this->belongsTo(Job::class);
+    }
+
+    protected static function booted(){
+        static::creating(function($jobApplicant){
+            $jobApplicant->attributes['id'] = Uuid::uuid4();
+        });
     }
 
 }

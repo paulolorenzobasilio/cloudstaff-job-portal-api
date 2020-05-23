@@ -14,11 +14,12 @@ class CreateJobApplicantsTable extends Migration
     public function up()
     {
         Schema::create('job_applicants', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id');
             $table->foreignId('job_id')->constrained()->onDelete('cascade');
+            $table->string('email');
             $table->string('name');
-            $table->string('email')->unique();
             $table->string('resume_link')->comment('Amazon S3 link');
+            $table->primary(['job_id', 'email']);
             $table->timestamps();
         });
     }
