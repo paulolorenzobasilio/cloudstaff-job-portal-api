@@ -47,4 +47,5 @@ $router->group(['prefix' => 'employer/auth'], function ($router) {
 $router->group(['prefix' => 'jobs'], function ($router) {
     $router->get('', 'JobController@index');
     $router->get('{slug}', 'JobController@show');
+    $router->post('{slug}/apply', 'JobController@apply');
 });

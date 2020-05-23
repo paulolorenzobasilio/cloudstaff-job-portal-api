@@ -12,6 +12,7 @@ class EmployerController extends Controller
     {
         $employer = auth()->guard('employer')->user();
         $this->jobs = $employer->jobs();
+        
     }
 
     public function index()
