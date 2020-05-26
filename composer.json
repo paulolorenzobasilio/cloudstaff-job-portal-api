@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": "^7.2.5",
+        "aws/aws-sdk-php": "^3.138",
         "laravel/lumen-framework": "^7.0",
         "ramsey/uuid": "^4.0",
         "tymon/jwt-auth": "^1.0"

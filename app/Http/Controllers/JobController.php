@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Job;
+use App\Services\S3;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Laravel\Lumen\Routing\Controller as BaseController;
@@ -21,7 +22,7 @@ class JobController extends BaseController
         return response()->json($jobPosting);
     }
 
-    public function apply(Job $job, $slug)
+    public function apply(Job $job, S3 $s3, $slug)
     {
         $jobPosting = $job->titleSlug($slug)->first();
 
@@ -32,14 +33,11 @@ class JobController extends BaseController
         $this->validate(request(), [
             'name' => 'required',
             'email' => 'required|email',
-            'resume_link' => 'required|file'
+            'resume' => 'required|file'
         ]);
 
-        $data = request(['name', 'email', 'resume_link']);
-        /**
-         * TODO: uploading of resume link into Amazon S3
-         */
-        $data['resume_link'] = "http://somerandomurl.com";
+        $data = request(['name', 'email']);
+        $data['resume_link'] = $s3->put(request()->file('resume'));
 
         $jobApplicants = $jobPosting->job_applicants();
         
