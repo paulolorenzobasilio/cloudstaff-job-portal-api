@@ -47,6 +47,8 @@ $factory->define(Employer::class, function (Faker $faker) {
 
 $factory->define(Job::class, function (Faker $faker) {
     $title = $faker->sentence(3);
+    $salary_min = ['10000', '20000','30000', '40000', '50000'];
+    $salary_max = ['60000', '70000','80000', '90000', '100000'];
 
     return [
         'title' => $title,
@@ -54,8 +56,8 @@ $factory->define(Job::class, function (Faker $faker) {
         'description' => $faker->paragraph(5),
         'requirements' => $faker->paragraph(5),
         'location' => $faker->sentence(),
-        'salary_min' => rand(25000, 50000),
-        'salary_max' => rand(60000, 120000),
+        'salary_min' => $salary_min[array_rand($salary_min)],
+        'salary_max' => $salary_max[array_rand($salary_max)],
         'employer_id' => factory(Employer::class),
         'posted' => rand(0,1)
     ];
