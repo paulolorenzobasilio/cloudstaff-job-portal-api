@@ -32,7 +32,7 @@ export AWS_SECRET_ACCESS_KEY=6o+7J/WkCJyj3XQdbPPx1940WAhKa/Sc1vhiGn6N
 
 2.) Serve the application `php -S localhost:8000 -t public` 
 
-3.) Check your localhost:8000
+3.) Check your http://localhost:8000
 
 ## API Docs
 Import the `insomnia_api.json` file to Insomnia client.
