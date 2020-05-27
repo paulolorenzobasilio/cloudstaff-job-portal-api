@@ -23,7 +23,7 @@ class S3
     {
         try {
             $result = $this->s3->putObject([
-                'Bucket' => 'job-portal-cloudstaff-bucket',
+                'Bucket' => env('S3_BUCKET'),
                 'Key' => $uploadedFile->hashName(),
                 'SourceFile' => $uploadedFile->path(),
                 'ACL' => 'public-read'
